@@ -91,7 +91,7 @@ set(LIBS_BOARD
 set(INC_DIRS_BOARD
 )
 
-# Config options
+# Config options ####
 
 set(MAX_GAMEPADS 1 CACHE STRING "Set number of gamepads, 1 to 4")
 if (MAX_GAMEPADS GREATER 4 OR MAX_GAMEPADS LESS 1)

@@ -1,0 +1,33 @@
+name: OGX-Mini Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Arm GNU Toolchain
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
+
+      - name: Build OGX-Mini firmware
+        run: |
+          cmake -S Firmware/RP2040 -B Firmware/RP2040/build -G Ninja -DCMAKE_BUILD_TYPE=Release -DOGXM_BOARD=RP2350_USB_A -DMAX_GAMEPADS=1
+          cmake --build Firmware/RP2040/build --config Release --parallel $(nproc)
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: OGX-Mini-RP2350_USB_A
+          path: Firmware/RP2040/build/OGX-Mini*.uf2
