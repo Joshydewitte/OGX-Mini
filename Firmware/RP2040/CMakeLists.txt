@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.13)
 
 include(${CMAKE_CURRENT_LIST_DIR}/../FWDefines.cmake)
 
-set(CMAKE_C_COMPILER arm-none-eabi-gcc)
-set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
+set(CMAKE_C_COMPILER "C:/Tools/.pico-sdk/toolchain/13_2_Rel1/bin/arm-none-eabi-gcc.exe")
+set(CMAKE_CXX_COMPILER "C:/Tools/.pico-sdk/toolchain/13_2_Rel1/bin/arm-none-eabi-g++.exe")
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 20)
@@ -91,7 +91,7 @@ set(LIBS_BOARD
 set(INC_DIRS_BOARD
 )
 
-# Config options ####
+# Config options
 
 set(MAX_GAMEPADS 1 CACHE STRING "Set number of gamepads, 1 to 4")
 if (MAX_GAMEPADS GREATER 4 OR MAX_GAMEPADS LESS 1)
@@ -305,7 +305,12 @@ if(NOT EN_BLUETOOTH)
     add_compile_definitions(PICO_XOSC_STARTUP_DELAY_MULTIPLIER=64)
 endif()
 
-include(${PICO_SDK_PATH}/pico_sdk_init.cmake)
+# Use existing picotool and disable version check
+set(PICO_SDK_TOOLS_DIR "C:/Tools/.pico-sdk/picotool-2.1.1")
+set(PICOTOOL_FORCE_FETCH_FROM_GIT OFF)
+set(PICO_NO_PICOTOOL ON)
+
+include(C:/Tools/.pico-sdk/sdk/2.0.0/pico_sdk_init.cmake)
 
 message("PICO_SDK_VERSION_STRING: ${PICO_SDK_VERSION_STRING}")
 if(PICO_SDK_VERSION_STRING VERSION_LESS "${PICOSDK_VERSION_TAG}")
@@ -344,7 +349,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${FW_NAME} PRIVATE
         PICO_DEFAULT_UART=${UART_PORT}
         PICO_DEFAULT_UART_TX_PIN=${TX_PIN}
-        PICO_DEFAULT_UART_RX_PIN=${RX_PIN}
+        PICO_DEFAULT_UART_RX_PIN=${RX_PIN} 
     )
  
     add_compile_definitions(CFG_TUSB_DEBUG=1)
