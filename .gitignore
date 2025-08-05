@@ -11,4 +11,9 @@ Firmware/ESP32/sdkconfig.old
 Firmware/external/pico-sdk
 Firmware/external/picotool
 Tools/dvd-dongle-rom.bin
-Tools-for-C-disk/
+
+# Include Tools-for-C-disk but exclude large binaries
+Tools-for-C-disk/Tools/.pico-sdk/toolchain/*/bin/*.exe
+Tools-for-C-disk/Tools/.pico-sdk/toolchain/*/libexec/**/*.exe
+Tools-for-C-disk/Tools/.pico-sdk/toolchain/*/lib/**/*.a
+Tools-for-C-disk/Tools/.pico-sdk/toolchain/*/riscv32-unknown-elf/lib/**/*.a
